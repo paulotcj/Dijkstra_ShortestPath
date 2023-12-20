@@ -96,7 +96,7 @@
 
 
             var myGraph3 = new MyGraph_Dijkstra_ShortestPath();
-            myGraph3.InputDataFromMatrix(headers: nodesArray, rows: edgesArray, distances: distanceArray);
+            myGraph3.InputDataFromMatrix(headers_lists: nodesArray, connection_matrix: edgesArray, distances: distanceArray);
             myGraph3.Print();
             Console.WriteLine($"##############################");
             Console.WriteLine($"Dijkstra Shortest Path");
@@ -113,22 +113,22 @@
 
     public class MyGraph_Dijkstra_ShortestPath
     {
-        public void InputDataFromMatrix(string[] headers, int[][] rows, int[][] distances)
+        public void InputDataFromMatrix(string[] headers_lists, int[][] connection_matrix, int[][] distances)
         {
             
-            for(int i = 0; i< headers.Length; i++)
+            for(int header_i = 0; header_i < headers_lists.Length; header_i++)
             {
-                string node1 = headers[i];
+                string node_1 = headers_lists[header_i];
 
-                for(int j = 0; j < rows[i].Length; j++)
+                for(int conn_i = 0; conn_i < connection_matrix[header_i].Length; conn_i++)
                 {
-                    string node2;
+                    string node_2;
                     int distance;
-                    if (rows[i][j] == 1)
+                    if (connection_matrix[header_i][conn_i] == 1)
                     {
-                        node2 = headers[j];
-                        distance = distances[i][j];
-                        AddEdge(node1, node2, distance);
+                        node_2 = headers_lists[conn_i];
+                        distance = distances[header_i][conn_i];
+                        AddEdge(node_1, node_2, distance);
                     }
                 }
 
@@ -195,6 +195,14 @@
 
             while (q.Count > 0) //standard BFS approach, queue the first node and then reach for all its children and then explore from there
             {
+                //--------
+                Console.WriteLine($"printing the queue");
+                string temp_str = "";
+                foreach (var i in q) {
+                    temp_str += $"{i}, ";
+                }
+                Console.WriteLine(temp_str);
+                //--------
                 current = q.Dequeue();
                 //current = q.First();
                 //q.RemoveFirst();
